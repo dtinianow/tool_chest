@@ -1,0 +1,10 @@
+<h2>All the Tools</h2>
+<div class="list_of_tools">
+<% @tools.each do |tool| %>
+<h4><%= link_to tool.name, tool_path(tool) %> - <%= tool.quantity %> - $<%= tool.price %></h4>
+<%= link_to "Edit", edit_tool_path(tool) %>
+<%= link_to "Delete", tool_path(tool), method: :delete %>
+<% end %>
+</div>
+<br>
+<%= link_to "Create New Tool", new_tool_path %>
