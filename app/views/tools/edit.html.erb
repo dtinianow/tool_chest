@@ -1,4 +1,7 @@
-<%= form_for(@tool) do |f| %>
+<%= render partial: 'shared/summary' %>
+
+<h1>Edit Tool</h1>
+<%= form_for([@user, @tool]) do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
 

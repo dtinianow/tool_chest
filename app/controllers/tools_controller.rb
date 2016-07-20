@@ -1,7 +1,9 @@
 class ToolsController < ApplicationController
+  before_action :set_user, only: [:index, :new, :create, :edit, :update]
+
 
   def index
-    @tools = Tool.all
+    @tools = @user.tools.all
   end
 
   def show
@@ -13,15 +15,14 @@ class ToolsController < ApplicationController
   end
 
   def create
-    @tool = Tool.new(tool_params)
+    @tool = @user.tools.new(tool_params)
     if @tool.save
       flash[:notice] = 'Tool created!'
-      session[:most_recent_tool_id] = @tool.id
       session[:current_tool_count] = 0 if session[:current_tool_count].nil?
-      session[:current_tool_count] += 1
+      session[:current_tool_count] += @tool.quantity
       session[:current_potential_revenue] = 0.0 if session[:current_potential_revenue].nil?
-      session[:current_potential_revenue] += @tool.price
-      redirect_to tool_path(@tool)
+      session[:current_potential_revenue] = session[:current_potential_revenue].to_f + @tool.price
+      redirect_to user_tool_path(id: @tool)
     else
       flash.now[:error] = @tool.errors.full_messages.join(", ")
       render :new
@@ -35,7 +36,7 @@ class ToolsController < ApplicationController
   def update
     @tool = Tool.find(params[:id])
     if @tool.update(tool_params)
-      redirect_to tool_path(@tool)
+      redirect_to user_tool_path(id: @tool)
     else
       render :edit
     end
@@ -44,10 +45,15 @@ class ToolsController < ApplicationController
   def destroy
     tool = Tool.find(params[:id])
     tool.destroy
-    redirect_to tools_path
+    redirect_to user_tools_path
   end
 
 private
+
+  def set_user
+    @user = User.find(current_user)
+  end
+
   def tool_params
     params.require(:tool).permit(:name, :quantity, :price)
   end

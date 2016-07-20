@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "See each tool", :type => :feature do
+xdescribe "See each tool", :type => :feature do
   scenario "User creates new tool and sees them on home page" do
     visit tools_path
     within(".list_of_tools") do

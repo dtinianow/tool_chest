@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :most_recent_tool, :tool_exists?, :current_tool_summary
+  helper_method :current_user, :most_recent_tool, :current_tool_summary
 
-  def most_recent_tool
-    Tool.find(session[:most_recent_tool_id])
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  def tool_exists?
-    Tool.exists?(session[:most_recent_tool_id])
+  def most_recent_tool
+    User.find(current_user).tools.last
   end
 
   def current_tool_summary
@@ -15,5 +15,4 @@ class ApplicationController < ActionController::Base
     <br><br>
      <strong>Total cost: </strong>#{session[:current_potential_revenue]}".html_safe
   end
-
 end

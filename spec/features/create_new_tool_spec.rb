@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Create new tool", :type => :feature do
+xdescribe "Create new tool", :type => :feature do
   scenario "User creates a new tool" do
     visit new_tool_path
 
@@ -13,7 +13,7 @@ describe "Create new tool", :type => :feature do
   end
 end
 
-describe "Delete a tool" do, :type => :feature do
+xdescribe "Delete a tool", :type => :feature do
   scenario "User can delete a tool" do
     Tool.create(name: "Axe", price: 123, quantity: 1)
 

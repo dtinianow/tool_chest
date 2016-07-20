@@ -1,5 +1,8 @@
+<%= render partial: 'shared/summary' %>
+
+<h1>Create Tool</h1>
 <div class="tool_form">
-<%= form_for(@tool) do |f| %>
+<%= form_for([@user, @tool]) do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
 
@@ -8,6 +11,8 @@
 
   <%= f.label :price %>
   <%= f.text_field :price %>
+
+  <%#= collection_select(:tool, :category_id, Category.all, :id, :name) %>
 
   <%= f.submit %>
 <% end %>
