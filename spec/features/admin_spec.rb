@@ -8,20 +8,20 @@ RSpec.feature "As an admin" do
 
     ApplicationController.any_instance.stubs(:current_user).returns(admin)
 
-    hammer = Tool.create(name: "Hammer", price: 1.99, quantity: 2)
-    saw = Tool.create(name: "Saw", price: 5.50, quantity: 1)
-
     visit login_path
 
     fill_in 'session_username', with: 'david'
     fill_in 'session_password', with: 'password'
 
     click_on 'Login'
+    cat = Category.create(name: "Stuff")
+    admin.tools.create!(name: "Hammer", price: 1.99, quantity: 2, category_id: cat.id)
+    admin.tools.create!(name: "Saw", price: 5.50, quantity: 1, category_id: cat.id)
 
     expect(current_path).to eq(admin_tools_path)
     expect(page).to have_content 'All the Tools'
-    expect(page).to have_content hammer.name
-    expect(page).to have_content screwdriver.price
+    expect(page).to have_content "Hammer"
+    expect(page).to have_content "5.50"
     expect(page).to have_link 'Sign Out'
   end
 
