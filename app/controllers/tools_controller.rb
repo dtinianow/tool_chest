@@ -51,10 +51,10 @@ class ToolsController < ApplicationController
 private
 
   def set_user
-    @user = User.find(current_user)
+    @user = User.find(current_user.id)
   end
 
   def tool_params
-    params.require(:tool).permit(:name, :quantity, :price)
+    params.require(:tool).permit(:name, :quantity, :price, :category_id)
   end
 end

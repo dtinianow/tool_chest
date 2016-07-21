@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "User can login and logout" do
-  xscenario "they can successfully login" do
+  scenario "they can successfully login" do
     user = User.create(username: "david", password: "password")
 
     visit login_path
@@ -11,7 +11,7 @@ RSpec.feature "User can login and logout" do
 
     click_on 'Login'
 
-    expect(current_path).to eq(tools_path)
+    expect(current_path).to eq(user_tools_path(user))
     within('#greeting') do
       expect(page).to have_content 'Hello, david!'
     end
@@ -44,7 +44,7 @@ RSpec.feature "User can login and logout" do
 
     click_on "Sign Out"
 
-    expect(current_path).to eq(tools_path)
+    expect(current_path).to eq(login_path)
     expect(page).not_to have_content "Hello, david!"
   end
 end

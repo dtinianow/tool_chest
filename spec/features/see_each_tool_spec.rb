@@ -25,10 +25,3 @@ xdescribe "See each tool", :type => :feature do
     end
   end
 end
-#as a user
-#when I visit the tool index
-#Then I don't see any tools
-#When I create a new tool
-#And submit the form
-#And return to home
-#Then I see that tool on the homepage
