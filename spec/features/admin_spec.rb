@@ -6,7 +6,7 @@ RSpec.feature "As an admin" do
 
     admin = User.create!(username: "david", password: "password", role: 1)
 
-    ApplicationController.any_instance.stubs(:current_user).returns(admin)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
     visit login_path
 
